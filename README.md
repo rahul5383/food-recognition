@@ -26,7 +26,7 @@ cd dish-to-recipe
 
 ---
 
-###2️⃣ Install Dependencies
+### 2️⃣ Install Dependencies
 ```bash
 pip install transformers torch requests pillow fastapi uvicorn
 ```
