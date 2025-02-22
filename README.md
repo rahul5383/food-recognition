@@ -22,3 +22,11 @@ A web application that predicts food dishes from images and generates recipes us
 ```bash
 git clone https://github.com/your-username/dish-to-recipe.git
 cd dish-to-recipe
+```
+
+---
+
+###2️⃣ Install Dependencies
+```bash
+pip install transformers torch requests pillow fastapi uvicorn
+```
