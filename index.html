@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dish to Recipe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Parallax Section with "Hello!" -->
+  <section class="parallax-section">
+    <div class="parallax-content">
+      <h1>Hello!</h1>
+      <div class="typing-animation">
+        <span id="typed-text"></span>
+        <span class="cursor"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Section with Background Image -->
+  <section class="main-content">
+    <div class="background-image"></div> <!-- New background image -->
+    <div class="container">
+      <h1>Dish to Recipe</h1>
+      <p class="subtitle">Upload a dish image, and we'll generate the recipe for you!</p>
+      <form id="uploadForm" class="upload-form" enctype="multipart/form-data">
+        <input type="file" id="dishImage" class="file-input" accept="image/*" required>
+        <label for="dishImage" class="file-label">Choose Image</label>
+        <button type="submit" class="submit-btn">Get Recipe</button>
+      </form>
+      <div class="loading" id="loading">
+        <div class="spinner"></div> Cooking up your recipe...
+      </div>
+      <div class="result" id="result"></div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
