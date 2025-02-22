@@ -46,18 +46,56 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
       body: formData,
     });
 
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
     const data = await response.json();
+    console.log("Backend response:", data);  // Log the response
+
+    // Format the recipe output
+    const recipeOutput = `
+      <div class="recipe-output">
+        <h2>🍽️ Dish: ${data.dish}</h2>
+        <h3>📝 Recipe:</h3>
+        ${formatRecipe(data.recipe)}
+      </div>
+    `;
 
     // Display result
-    document.getElementById('result').innerHTML = `
-      <h2>🍽️ Dish: ${data.dish}</h2>
-      <p><strong>Confidence:</strong> ${(data.confidence * 100).toFixed(2)}%</p>
-      <p><strong>📝 Recipe:</strong> ${data.recipe}</p>
-    `;
+    document.getElementById('result').innerHTML = recipeOutput;
   } catch (error) {
+    console.error("Error:", error);  // Log the error
     document.getElementById('result').innerText = '❌ Error detecting dish or fetching recipe. Please try again.';
   } finally {
     // Hide loading spinner
     document.getElementById('loading').style.display = 'none';
   }
 });
+
+// Function to format the recipe
+function formatRecipe(recipe) {
+  // Split the recipe into ingredients and instructions
+  const [ingredientsPart, instructionsPart] = recipe.split('**Instructions:**');
+
+  // Format ingredients
+  const ingredients = ingredientsPart
+    .replace('**Ingredients:**', '') // Remove the "Ingredients" heading
+    .split('-') // Split into individual ingredients
+    .filter(item => item.trim() !== '') // Remove empty items
+    .map(item => `<li>${item.trim()}</li>`); // Wrap each ingredient in <li>
+
+  // Format instructions
+  const instructions = instructionsPart
+    .split('-') // Split into individual steps
+    .filter(item => item.trim() !== '') // Remove empty items
+    .map((item, index) => `<li>${item.trim()}</li>`); // Wrap each step in <li>
+
+  // Return structured HTML
+  return `
+    <h3>Ingredients:</h3>
+    <ul>${ingredients.join('')}</ul>
+    <h3>Instructions:</h3>
+    <ol>${instructions.join('')}</ol>
+  `;
+}
