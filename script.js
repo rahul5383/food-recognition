@@ -99,3 +99,8 @@ function formatRecipe(recipe) {
     <ol>${instructions.join('')}</ol>
   `;
 }
+
+  const username = localStorage.getItem('username');
+  if (username) {
+    document.getElementById('usernameDisplay').textContent = `Hello, ${username}!`;
+  }
