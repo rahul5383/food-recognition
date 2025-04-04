@@ -198,3 +198,110 @@ h1 {
   animation: spin 1s linear infinite;
   margin-right: 10px;
 }
+
+/* Auth Buttons */
+.auth-buttons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2; /* Ensure buttons are above the background */
+}
+
+.auth-btn {
+  background: #e67e22; /* Warm orange */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-left: 10px;
+}
+
+.auth-btn:hover {
+  background: #d35400; /* Darker orange on hover */
+}
+
+/* Auth Section */
+.auth-section {
+  height: 100vh;
+  background-image: url('images/foodbg.jpg'); /* Use the same background as the parallax section */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-container {
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.auth-container h1 {
+  font-size: 32px;
+  color: #e67e22; /* Warm orange */
+  margin-bottom: 20px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+}
+
+.auth-input:focus {
+  border-color: #e67e22; /* Warm orange */
+}
+
+.auth-submit-btn {
+  background: #e67e22; /* Warm orange */
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.auth-submit-btn:hover {
+  background: #d35400; /* Darker orange on hover */
+}
+
+.auth-container p {
+  margin-top: 15px;
+  color: #333;
+}
+
+.auth-container a {
+  color: #e67e22; /* Warm orange */
+  text-decoration: none;
+}
+
+.auth-container a:hover {
+  text-decoration: underline;
+}
+
+/* Username Display */
+.username-display {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 18px;
+  color: white;
+  z-index: 2;
+}
