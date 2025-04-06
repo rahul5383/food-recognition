@@ -24,11 +24,21 @@
   <section class="main-content">
     <div class="background-image"></div> <!-- New background image -->
     <div class="auth-buttons">
-      <button class="auth-btn" onclick="window.location.href='signup.html'">Sign Up</button>
-      <button class="auth-btn" onclick="window.location.href='login.html'">Login</button>
+      <button class="auth-btn" id="signUpBtn" onclick="window.location.href='register.html'">Sign Up</button>
+      <button class="auth-btn" id="loginBtn" onclick="window.location.href='signin.html'">Login</button>
+      <button class="auth-btn" id="logoutBtn" style="display: none;">Logout</button>
     </div>
     <div class="username-display" id="usernameDisplay"></div>
     <div class="container">
+      <div id="loginPrompt" class="login-prompt" style="display: none;">
+        <div class="prompt-content">
+          <p>Please sign up or log in to use the recipe generator!</p>
+          <div class="prompt-buttons">
+            <button onclick="window.location.href='register.html'">Sign Up</button>
+            <button onclick="window.location.href='signin.html'">Login</button>
+          </div>
+        </div>
+      </div>
       <h1>Dish to Recipe</h1>
       <p class="subtitle">Upload a dish image, and we'll generate the recipe for you!</p>
       <form id="uploadForm" class="upload-form" enctype="multipart/form-data">
@@ -42,7 +52,16 @@
       <div class="result" id="result"></div>
     </div>
   </section>
-
-  <script src="script.js"></script>
+<div class="feedback-container" id="feedbackContainer">
+  <button class="feedback-btn" id="feedbackBtn">Feedback</button>
+  <div class="feedback-form" id="feedbackForm">
+    <h3>Share your feedback</h3>
+    <input type="hidden" id="userId" value="">
+    <textarea id="feedbackMessage" placeholder="What do you think about our service?" rows="4"></textarea>
+    <button class="submit-feedback" id="submitFeedback">Submit</button>
+    <div class="feedback-message"></div>
+  </div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
