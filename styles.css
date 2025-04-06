@@ -305,3 +305,156 @@ h1 {
   color: white;
   z-index: 2;
 }
+
+/* Logout button specific styles */
+#logoutBtn {
+  background-color: #e74c3c; /* Red color for logout */
+  color: white;
+}
+
+#logoutBtn:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Make sure auth buttons don't wrap */
+.auth-buttons {
+  white-space: nowrap;
+}
+
+/* Login Prompt Styles */
+.login-prompt {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.login-prompt.show {
+  opacity: 1;
+}
+
+.prompt-content {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+}
+
+.login-prompt.show .prompt-content {
+  transform: translateY(0);
+}
+
+.prompt-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.prompt-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.prompt-buttons button:first-child {
+  background: #4CAF50;
+  color: white;
+}
+
+.prompt-buttons button:last-child {
+  background: #2196F3;
+  color: white;
+}
+
+/* Feedback Styles */
+.feedback-container {
+  position: fixed;
+  bottom: -100px;
+  right: 20px;
+  transition: bottom 0.3s ease;
+  z-index: 1000;
+}
+
+.feedback-container.visible {
+  bottom: 20px;
+}
+
+.feedback-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.feedback-form {
+  background: white;
+  padding: 15px;
+  border-radius: 5px 0 5px 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  width: 250px;
+  display: none;
+}
+
+.feedback-form h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.feedback-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: none;
+  font-family: 'Poppins', sans-serif;
+}
+
+.submit-feedback {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+}
+
+.submit-feedback:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.submit-feedback:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+.feedback-message {
+  margin-top: 10px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  color: #4CAF50;
+}
