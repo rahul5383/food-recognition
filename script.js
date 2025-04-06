@@ -29,6 +29,13 @@ window.addEventListener('scroll', () => {
 // Handle Image Upload and Recipe Generation
 document.getElementById('uploadForm').addEventListener('submit', async (e) => {
   e.preventDefault();
+  
+  // Check login status first
+  if (!isLoggedIn()) {
+    showLoginPrompt();
+    return;
+  }
+
   const file = document.getElementById('dishImage').files[0];
   if (!file) return;
 
@@ -62,6 +69,8 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
       </div>
     `;
 
+    console.log("Full recipe text:", data.recipe);
+
     // Display result
     document.getElementById('result').innerHTML = recipeOutput;
   } catch (error) {
@@ -75,32 +84,161 @@ document.getElementById('uploadForm').addEventListener('submit', async (e) => {
 
 // Function to format the recipe
 function formatRecipe(recipe) {
-  // Split the recipe into ingredients and instructions
-  const [ingredientsPart, instructionsPart] = recipe.split('**Instructions:**');
+  const ingredientsSplit = recipe.split(/\*\*Ingredients:\*\*/i);
+  const instructionsSplit = recipe.split(/\*\*Instructions:\*\*/i);
 
-  // Format ingredients
+  const ingredientsPart = ingredientsSplit[1] || '';
+  const instructionsPart = instructionsSplit[1] || '';
+
   const ingredients = ingredientsPart
-    .replace('**Ingredients:**', '') // Remove the "Ingredients" heading
-    .split('-') // Split into individual ingredients
-    .filter(item => item.trim() !== '') // Remove empty items
-    .map(item => `<li>${item.trim()}</li>`); // Wrap each ingredient in <li>
+    .split('*') // Markdown uses `*` or `-` for lists
+    .filter(item => item.trim())
+    .map(item => `<li>${item.trim()}</li>`);
 
-  // Format instructions
   const instructions = instructionsPart
-    .split('-') // Split into individual steps
-    .filter(item => item.trim() !== '') // Remove empty items
-    .map((item, index) => `<li>${item.trim()}</li>`); // Wrap each step in <li>
+    .split('*')
+    .filter(item => item.trim())
+    .map(item => `<li>${item.trim()}</li>`);
 
-  // Return structured HTML
   return `
     <h3>Ingredients:</h3>
     <ul>${ingredients.join('')}</ul>
     <h3>Instructions:</h3>
-    <ol>${instructions.join('')}</ol>
+    <ul>${instructions.join('')}</ul>
   `;
 }
 
-  const username = localStorage.getItem('username');
-  if (username) {
-    document.getElementById('usernameDisplay').textContent = `Hello, ${username}!`;
+// Authentication functions
+function isLoggedIn() {
+  return localStorage.getItem('isLoggedIn') === 'true';
+}
+
+function showLoginPrompt() {
+  const prompt = document.getElementById('loginPrompt');
+  prompt.style.display = 'flex';
+  setTimeout(() => prompt.classList.add('show'), 10);
+}
+
+function hideLoginPrompt() {
+  const prompt = document.getElementById('loginPrompt');
+  prompt.classList.remove('show');
+  setTimeout(() => prompt.style.display = 'none', 300);
+}
+
+// Check login status and update UI
+function updateAuthUI() {
+  const loggedIn = isLoggedIn();
+  const userEmail = localStorage.getItem('email');
+  
+  if (loggedIn) {
+    // User is logged in
+    document.getElementById('signUpBtn').style.display = 'none';
+    document.getElementById('loginBtn').style.display = 'none';
+    document.getElementById('logoutBtn').style.display = 'inline-block';
+    document.getElementById('usernameDisplay').textContent = `Welcome, ${userEmail}!`;
+    document.getElementById('uploadForm').style.opacity = '1';
+    document.getElementById('uploadForm').style.pointerEvents = 'auto';
+    hideLoginPrompt();
+  } else {
+    // User is logged out
+    document.getElementById('signUpBtn').style.display = 'inline-block';
+    document.getElementById('loginBtn').style.display = 'inline-block';
+    document.getElementById('logoutBtn').style.display = 'none';
+    document.getElementById('usernameDisplay').textContent = '';
+    document.getElementById('uploadForm').style.opacity = '0.5';
+    document.getElementById('uploadForm').style.pointerEvents = 'none';
   }
+}
+
+function handleLogout() {
+  localStorage.removeItem('isLoggedIn');
+  localStorage.removeItem('email');
+  updateAuthUI();
+  window.location.href = 'signin.html';
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  updateAuthUI();
+  
+  // Add event listener to logout button
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', handleLogout);
+  }
+  
+  // Show prompt if not logged in when page loads
+  if (!isLoggedIn()) {
+    showLoginPrompt();
+  }
+});
+
+// Feedback Form Functionality
+document.addEventListener('DOMContentLoaded', function() {
+  // Show feedback button after page loads
+  setTimeout(() => {
+    document.getElementById('feedbackContainer').classList.add('visible');
+  }, 3000);
+
+  // Toggle feedback form visibility
+  document.getElementById('feedbackBtn').addEventListener('click', function() {
+    const form = document.getElementById('feedbackForm');
+    form.style.display = form.style.display === 'block' ? 'none' : 'block';
+  });
+
+  function showFeedbackMessage(text, isSuccess) {
+    const messageDiv = document.querySelector('.feedback-message');
+    messageDiv.textContent = text;
+    messageDiv.style.color = isSuccess ? '#4CAF50' : '#e74c3c';
+    
+    setTimeout(() => {
+      messageDiv.textContent = '';
+    }, 3000);
+  }
+});
+
+document.getElementById('submitFeedback').addEventListener('click', async function() {
+    const message = document.getElementById('feedbackMessage').value.trim();
+    const userEmail = localStorage.getItem('email');
+    
+    if (!userEmail) {
+        showFeedbackMessage('Please log in to submit feedback', false);
+        return;
+    }
+
+    if (!message) {
+        showFeedbackMessage('Please enter your feedback', false);
+        return;
+    }
+
+    // Disable button during submission
+    this.disabled = true;
+    this.textContent = 'Submitting...';
+
+    try {
+        const response = await fetch('http://localhost:5000/feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                email: userEmail,  // Server will look up ID
+                message 
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to submit feedback');
+        }
+
+        document.getElementById('feedbackMessage').value = '';
+        showFeedbackMessage('Thank you for your feedback!', true);
+        
+        setTimeout(() => {
+            document.getElementById('feedbackForm').style.display = 'none';
+        }, 2000);
+    } catch (error) {
+        showFeedbackMessage(error.message, false);
+    } finally {
+        this.disabled = false;
+        this.textContent = 'Submit';
+    }
+});
