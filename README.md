@@ -6,7 +6,9 @@ A web application that predicts food dishes from images and generates recipes us
 - Upload an image of a dish 
 - AI-based food recognition 
 - Recipe generation based on detected dish 
-- Modern & interactive UI 
+- Modern & interactive UI
+- Feedback system
+- Sign up & Login with user authentication
 
 ---
 
@@ -14,7 +16,7 @@ A web application that predicts food dishes from images and generates recipes us
 - **Frontend:** HTML, CSS, JavaScript  
 - **Backend AI Model:** Hugging Face Transformers (`Shresthadev403/food-image-classification`)  
 - **API Calls:** Python + FastAPI (Optional)  
-
+- **Database:** PostgreSQL
 ---
 
 ##  **Setup & Installation**
