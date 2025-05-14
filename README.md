@@ -19,6 +19,13 @@ A web application that predicts food dishes from images and generates recipes us
 - **Database:** PostgreSQL
 ---
 
+## 🎥 Demo
+
+Check out a demo of the Dish-to-Recipe app in action:
+
+👉 [Click here to watch the demo video](./dish_to_recipe.mp4)
+
+
 ##  **Setup & Installation**
 ### 1️⃣ Clone the Repository
 ```bash
