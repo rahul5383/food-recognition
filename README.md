@@ -23,7 +23,7 @@ A web application that predicts food dishes from images and generates recipes us
 
 Check out a demo of the Dish-to-Recipe app in action:
 
-👉 [Click here to watch the demo video](./dish_to_recipe.mp4)
+👉 [Click here to watch the demo video](./Dish_To_Recipe.mp4)
 
 
 ##  **Setup & Installation**
